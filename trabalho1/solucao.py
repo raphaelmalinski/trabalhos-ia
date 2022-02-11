@@ -11,7 +11,10 @@ class Nodo:
         :param custo:int, custo do caminho da raiz até este nó
         """
         # substitua a linha abaixo pelo seu codigo
-        raise NotImplementedError
+        self.estado : str = estado
+        self.pai : Nodo = pai
+        self.acao : str = acao
+        self.custo : int = custo
 
 
 def sucessor(estado):
@@ -81,9 +84,13 @@ def expande(nodo):
     :param nodo: objeto da classe Nodo
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    sucessores = sucessor(nodo.estado)
+    nodos = []
 
+    for i in range(len(sucessores)):
+    	nodos.append(Nodo(sucessores[i][1], nodo, sucessores[i][0], nodo.custo + 1))
+    
+    return nodos
 
 def bfs(estado):
     """
