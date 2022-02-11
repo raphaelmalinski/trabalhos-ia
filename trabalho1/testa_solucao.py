@@ -10,12 +10,26 @@ class TestaSolucao(unittest.TestCase):
 
         """
         # a lista de sucessores esperados é igual ao conjunto abaixo (ordem nao importa)
-        succ_esperados = {("abaixo", "2435_1687"), ("esquerda", "_23541687"), ("direita", "23_541687")}
+        
+        INPUTS = ["_23541687", "2_3541687", "23_541687", "235_41687", "2354_1687", "23541_687", "235416_87", "2354168_7", "23541687_"]
+        
+        OUTPUTS = [
+            {("direita", "2_3541687"), ("abaixo", "523_41687")},#_23541687
+            {("abaixo", "2435_1687"), ("esquerda", "_23541687"), ("direita", "23_541687")},#2_3541687
+            {("abaixo", "23154_687"), ("esquerda", "2_3541687")},#23_541687
+            {("abaixo", "235641_87"), ("direita", "2354_1687"), ("acima", "_35241687")},#235_41687
+            {("abaixo", "2354816_7"), ("esquerda", "235_41687"), ("direita", "23541_687"), ("acima", "2_5431687")},#2354_1687
+            {("abaixo", "23541768_"), ("esquerda", "2354_1687"), ("acima", "23_415687")},#23541_687
+            {("direita", "2354168_7"), ("acima", "235_16487")},#235416_87
+            {("esquerda", "235416_87"), ("direita", "23541687_"), ("acima", "2354_6817")},#2354168_7
+            {("esquerda", "2354168_7"), ("acima", "23541_876")}#23541687_
+            ]
 
-        sucessores = solucao.sucessor("2_3541687")  # obtem os sucessores chamando a funcao implementada
-        self.assertEqual(3, len(sucessores))     # verifica se foram retornados 3 sucessores
-        for s in sucessores:                     # verifica se os sucessores retornados estao entre os esperados
-            self.assertIn(s, succ_esperados)
+        for i in range(len(INPUTS)):
+          sucessores = solucao.sucessor(INPUTS[i])  # obtem os sucessores chamando a funcao implementada
+          self.assertEqual(len(OUTPUTS[i]), len(sucessores))     # verifica se foram retornados 3 sucessores
+          for s in sucessores:                     # verifica se os sucessores retornados estao entre os esperados
+              self.assertIn(s, OUTPUTS[i])
 
     def test_expande(self):
         """
