@@ -25,54 +25,47 @@ def sucessor(estado):
     :param estado:
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    PUZZLE_SIZE=3
-    ACTIONS = ["acima", "esquerda", "abaixo", "direita"]
-    EMPTY_MARK = '_'
-    
     def isRightEdge(emptyPosition):
-      return emptyPosition%PUZZLE_SIZE == PUZZLE_SIZE - 2
+      return emptyPosition%PUZZLE_SIZE == PUZZLE_SIZE - 1
 
     def isLeftEdge(emptyPosition):
       return emptyPosition%PUZZLE_SIZE == 0
 
     def isBottomRow(emptyPosition):
-      return emptyPosition > (PUZZLE_SIZE*PUZZLE_SIZE) - (PUZZLE_SIZE)
+      return emptyPosition >= (PUZZLE_SIZE*PUZZLE_SIZE) - (PUZZLE_SIZE)
 
     def isTopRow(emptyPosition):
-      return emptyPosition < PUZZLE_SIZE - 1
+      return emptyPosition <= PUZZLE_SIZE - 1
     
+    def swap(estado, pos1, pos2):
+      newState = list(estado)
+      temp = newState[pos1]
+      newState[pos1] = newState[pos2]
+      newState[pos2] = temp
+      return "".join(newState)
+    
+    PUZZLE_SIZE = 3
+    ACTIONS = ["acima", "esquerda", "abaixo", "direita"]
+    EMPTY_MARK = '_'
+
     emptyPosition = estado.find(EMPTY_MARK)
     actionsList = []
 
-    if(not isTopRow(emptyPosition=emptyPosition)):
+    if(not isTopRow(emptyPosition)):
       #TEM AÇÃO ACIMA
-      newState = estado
-      newState[emptyPosition] = newState[emptyPosition - 3]
-      newState[emptyPosition - 3] = newState[emptyPosition]
-      actionsList.append((ACTIONS[1], newState))
+      actionsList.append((ACTIONS[0], swap(estado, emptyPosition, emptyPosition-PUZZLE_SIZE)))
 
-    if(not isBottomRow(emptyPosition=emptyPosition)):
+    if(not isBottomRow(emptyPosition)):
       #TEM AÇÃO ABAIXO
-      newState = estado
-      newState[emptyPosition] = newState[emptyPosition + 3]
-      newState[emptyPosition + 3] = newState[emptyPosition]
-      actionsList.append((ACTIONS[3], newState))
+      actionsList.append((ACTIONS[2], swap(estado, emptyPosition, emptyPosition+PUZZLE_SIZE)))
 
-    if(not isRightEdge(emptyPosition=emptyPosition)):
+    if(not isRightEdge(emptyPosition)):
       #TEM AÇÃO DIREITA
-      newState = estado
-      newState[emptyPosition] = newState[emptyPosition + 1]
-      newState[emptyPosition + 1] = newState[emptyPosition]
-      actionsList.append((ACTIONS[4]), newState)
+      actionsList.append((ACTIONS[3], swap(estado, emptyPosition, emptyPosition+1)))
 
-
-    if(not isLeftEdge(emptyPosition=emptyPosition)):
+    if(not isLeftEdge(emptyPosition)):
       #TEM AÇÃO ESQUERDA
-      newState = estado
-      newState[emptyPosition] = newState[emptyPosition - 1]
-      newState[emptyPosition -1] = newState[emptyPosition]
-      actionsList.append((ACTIONS[2]), newState)
+      actionsList.append((ACTIONS[1], swap(estado, emptyPosition, emptyPosition-1)))
   
     return actionsList
 
