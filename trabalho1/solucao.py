@@ -94,9 +94,20 @@ def bfs(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    OBJETIVO = "12345678_"
+    nodo_raiz = Nodo(estado, None, "", 0)
+    visitados = []
+    fronteira = [nodo_raiz]
 
+    while len(fronteira) > 0:
+    	v = fronteira.pop(0)
+    	if v.estado == OBJETIVO:
+    	    return visitados
+
+    	if v not in visitados: 	
+    	    visitados.append(v)
+    	    sucessores = expande(v)
+    	    fronteira.extend(sucessores)
 
 def dfs(estado):
     """
