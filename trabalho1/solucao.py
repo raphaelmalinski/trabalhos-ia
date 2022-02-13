@@ -18,6 +18,35 @@ class Nodo:
         self.acao : str = acao
         self.custo : int = custo
 
+    def isSolved(self):
+      OBJETIVO = "12345678_"
+      return self.estado == OBJETIVO
+
+    def getPath(self):
+      path = list()
+      node = self
+      while not node.pai == None:
+        path.append((node.acao, node.estado))
+        node = node.pai
+      path.reverse()
+      return path
+
+    def isSolvable(self):
+      #Check the number of inversions
+      #Reference: https://tutorialspoint.dev/algorithm/algorithms/check-instance-8-puzzle-solvable
+      EMPTY_MARK = "_"
+      inversions = 0
+      stateList = list(self.estado)
+      emptyPosition = self.estado.find(EMPTY_MARK)
+      stateList.pop(emptyPosition)
+
+      for index, element in enumerate(stateList):
+        for subsequent in stateList[index+1:]:
+          if subsequent < element:
+            inversions+=1
+
+      return (inversions%2==0)
+
 
 def sucessor(estado):
     """
@@ -96,45 +125,16 @@ def bfs(estado):
     :param estado: str
     :return:
     """
-    def pathFromRootNode(actualNode, solutionSteps=[]):
-      if(actualNode.pai == None):
-        return solutionSteps.append((actualNode.acao, actualNode.estado))
-
-      pathFromRootNode(actualNode.pai, solutionSteps)
-      solutionSteps.append((actualNode.acao, actualNode.estado))
-      return solutionSteps
-    
-    def isSolvable(state):
-      #Check the number of inversions
-      #Reference: https://tutorialspoint.dev/algorithm/algorithms/check-instance-8-puzzle-solvable
-      EMPTY_MARK = "_"
-      inversions = 0
-      stateList = list(state)
-      emptyPosition = state.find(EMPTY_MARK)
-      stateList.pop(emptyPosition)
-
-      for index, element in enumerate(stateList):
-        for subsequent in stateList[index+1:]:
-          if subsequent < element:
-            inversions+=1
-
-      return (inversions%2==0)
-      
-
-
-    OBJETIVO = "12345678_"
     nodo_raiz = Nodo(estado, None, "", 0)
+    if not nodo_raiz.isSolvable(): return None
     visitados = []
     fronteira = Queue()
     fronteira.put(nodo_raiz)
 
-    if not isSolvable(estado):
-      return None
-
     while not fronteira.empty():
       v = fronteira.get()
-      if v.estado == OBJETIVO:
-        return pathFromRootNode(v)
+      if v.isSolved():
+        return v.getPath()
 
       if v.estado not in visitados:
         visitados.append(v.estado)
@@ -160,7 +160,7 @@ def h_haming(estado):
     Recebe um estado e retorna a distancia de hamming
     """
     OBJETIVO = "12345678_"
-    h = sum( OBJETIVO[i] != estado[i] for i in range(len(estado)) )\
+    h = sum( OBJETIVO[i] != estado[i] for i in range(len(estado)))
     
     return h
 
@@ -173,32 +173,22 @@ def astar_hamming(estado):
     :param estado: str
     :return:
     """
-    def pathFromRootNode(actualNode, solutionSteps=[]):
-      if(actualNode.pai == None):
-        return solutionSteps.append((actualNode.acao, actualNode.estado))
-
-      pathFromRootNode(actualNode.pai, solutionSteps)
-      solutionSteps.append((actualNode.acao, actualNode.estado))
-      return solutionSteps
-      
-
-
-    OBJETIVO = "12345678_"
     nodo_raiz = Nodo(estado, None, "", 0)
+    if nodo_raiz.isSolvable(): return True
     visitados = []
     fronteira = PriorityQueue()
     fronteira.put((0,nodo_raiz))
 
-    while len(fronteira) > 0:
+    while not fronteira.empty():
       v = fronteira.get()
-      if v.estado == OBJETIVO:
-        return pathFromRootNode(v)
+      if v.isSolved():
+        return v.getPath()
 
       if v.estado not in visitados:
         visitados.append(v.estado)
         sucessores = expande(v)
         for nodo in sucessores:
-        	fronteira.put((nodo.custo + h_hamming(nodo.estado), nodo))
+          fronteira.put((nodo.custo + h_hamming(nodo.estado), nodo))
 
     return None     #return None if it has no solution
 
