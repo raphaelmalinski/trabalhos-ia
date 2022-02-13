@@ -1,4 +1,4 @@
-from queue import PriorityQueue
+from queue import Queue, PriorityQueue
 
 class Nodo:
     """
@@ -103,23 +103,44 @@ def bfs(estado):
       pathFromRootNode(actualNode.pai, solutionSteps)
       solutionSteps.append((actualNode.acao, actualNode.estado))
       return solutionSteps
+    
+    def isSolvable(state):
+      #Check the number of inversions
+      #Reference: https://tutorialspoint.dev/algorithm/algorithms/check-instance-8-puzzle-solvable
+      EMPTY_MARK = "_"
+      inversions = 0
+      stateList = list(state)
+      emptyPosition = state.find(EMPTY_MARK)
+      stateList.pop(emptyPosition)
+
+      for index, element in enumerate(stateList):
+        for subsequent in stateList[index+1:]:
+          if subsequent < element:
+            inversions+=1
+
+      return (inversions%2==0)
       
 
 
     OBJETIVO = "12345678_"
     nodo_raiz = Nodo(estado, None, "", 0)
     visitados = []
-    fronteira = [nodo_raiz]
+    fronteira = Queue()
+    fronteira.put(nodo_raiz)
 
-    while len(fronteira) > 0:
-      v = fronteira.pop(0)
+    if not isSolvable(estado):
+      return None
+
+    while not fronteira.empty():
+      v = fronteira.get()
       if v.estado == OBJETIVO:
         return pathFromRootNode(v)
 
       if v.estado not in visitados:
         visitados.append(v.estado)
         sucessores = expande(v)
-        fronteira.extend(sucessores)
+        for sucessor in sucessores:
+          fronteira.put(sucessor)
     return None     #return None if it has no solution
 
 def dfs(estado):
