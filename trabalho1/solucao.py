@@ -81,8 +81,8 @@ def expande(nodo):
     nodos = []
 
     for i in range(len(sucessores)):
-    	nodos.append(Nodo(sucessores[i][1], nodo, sucessores[i][0], nodo.custo + 1))
-    
+      nodos.append(Nodo(sucessores[i][1], nodo, sucessores[i][0], nodo.custo + 1))
+
     return nodos
 
 def bfs(estado):
@@ -94,20 +94,31 @@ def bfs(estado):
     :param estado: str
     :return:
     """
+    def pathFromRootNode(actualNode, solutionSteps=[]):
+      if(actualNode.pai == None):
+        return solutionSteps.append((actualNode.acao, actualNode.estado))
+
+      pathFromRootNode(actualNode.pai, solutionSteps)
+      solutionSteps.append((actualNode.acao, actualNode.estado))
+      return solutionSteps
+      
+
+
     OBJETIVO = "12345678_"
     nodo_raiz = Nodo(estado, None, "", 0)
     visitados = []
     fronteira = [nodo_raiz]
 
     while len(fronteira) > 0:
-    	v = fronteira.pop(0)
-    	if v.estado == OBJETIVO:
-    	    return visitados
+      v = fronteira.pop(0)
+      if v.estado == OBJETIVO:
+        return pathFromRootNode(v)
 
-    	if v not in visitados: 	
-    	    visitados.append(v)
-    	    sucessores = expande(v)
-    	    fronteira.extend(sucessores)
+      if v not in visitados:
+        visitados.append(v)
+        sucessores = expande(v)
+        fronteira.extend(sucessores)
+    return None     #return None if it has no solution
 
 def dfs(estado):
     """
