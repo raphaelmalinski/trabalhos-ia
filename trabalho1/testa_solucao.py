@@ -75,6 +75,13 @@ class TestaSolucao(unittest.TestCase):
         # nao ha solucao a partir do estado 185423_67
         self.assertIsNone(solucao.astar_hamming("185423_67"))
 
+    def test_h_manhattan(self):
+        """
+        testa a distancia manhattan total do puzzle
+        """
+        # no estado 2_3541687, a solucao otima tem 23 movimentos.
+        self.assertEqual(11, (solucao.h_manhattan("2_3541687")))
+    
     def test_astar_manhattan(self):
         """
         Testa o A* com dist. Manhattan em um estado com solução e outro sem solução

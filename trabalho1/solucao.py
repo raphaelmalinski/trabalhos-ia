@@ -214,6 +214,27 @@ def astar_hamming(estado):
 
     return None     #return None if it has no solution
 
+def get_manhattan_distance(p, q):
+    """ 
+    Retorna a distância Manhattan entre os pontos p e q
+    """
+    distance = 0
+    for p_i, q_i in zip(p, q):
+        distance += abs(p_i - q_i)
+    
+    return distance
+
+def h_manhattan(estado):
+    """
+    Recebe um estado e retorna a distancia de Manhattan
+    """
+    COORD = {'1': (0, 2), '2': (1, 2), '3': (2, 2), '4': (0, 1), '5': (1, 1), '6': (2, 1), '7': (0, 0), '8': (1, 0), '9': (2,0)}
+    h = 0
+    for i in range(len(estado)):
+        if estado[i] != '_':
+            h += get_manhattan_distance(COORD[estado[i]], COORD[str(i + 1)])
+    
+    return h
 
 def astar_manhattan(estado):
     """
