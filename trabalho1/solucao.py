@@ -132,6 +132,14 @@ def dfs(estado):
     # substituir a linha abaixo pelo seu codigo
     raise NotImplementedError
 
+def h_haming(estado):
+    """
+    Recebe um estado e retorna a distancia de hamming
+    """
+	OBJETIVO = "12345678_"
+	h = sum( OBJETIVO[i] != estado[i] for i in range(len(estado)) )\
+	
+	return h
 
 def astar_hamming(estado):
     """
