@@ -117,8 +117,8 @@ def expande(nodo):
     sucessores = sucessor(nodo.estado)
     nodos = []
 
-    for i in range(len(sucessores)):
-      nodos.append(Nodo(sucessores[i][1], nodo, sucessores[i][0], nodo.custo + 1))
+    for suc in sucessores:
+      nodos.append(Nodo(suc[1], nodo, suc[0], nodo.custo + 1))
 
     return nodos
 
