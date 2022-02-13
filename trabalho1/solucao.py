@@ -1,4 +1,4 @@
-from queue import Queue, PriorityQueue
+from queue import Queue, LifoQueue, PriorityQueue
 
 class Nodo:
     """
@@ -159,7 +159,23 @@ def dfs(estado):
     :return:
     """
     # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    nodo_raiz = Nodo(estado, None, "", 0)
+    if not nodo_raiz.isSolvable(): return None
+    visitados = []
+    fronteira = LifoQueue()
+    fronteira.put(nodo_raiz)
+
+    while not fronteira.empty():
+      v = fronteira.get()
+      if v.isSolved():
+        return v.getPath()
+
+      if v.estado not in visitados:
+        visitados.append(v.estado)
+        sucessores = expande(v)
+        for sucessor in sucessores:
+          fronteira.put(sucessor)
+    return None     #return None if it has no solution
 
 def h_hamming(estado):
     """
