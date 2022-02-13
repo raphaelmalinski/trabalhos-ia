@@ -32,7 +32,7 @@ class Nodo:
       path = list()
       node = self
       while not node.pai == None:
-        path.append((node.acao, node.estado))
+        path.append(node.acao)
         node = node.pai
       path.reverse()
       return path
