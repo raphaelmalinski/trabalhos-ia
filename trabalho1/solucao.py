@@ -135,7 +135,7 @@ def bfs(estado):
     tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
-    visitados = []
+    visitados = {}
     fronteira = Queue()
     fronteira.put(nodo_raiz)
     qtd_nos_expandidos = 0
@@ -150,7 +150,7 @@ def bfs(estado):
         return v.getPath()
 
       if v.estado not in visitados:
-        visitados.append(v.estado)
+        visitados[v.estado] = True
         sucessores = expande(v)
         qtd_nos_expandidos += 1
         for sucessor in sucessores:
@@ -170,7 +170,7 @@ def dfs(estado):
     tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
-    visitados = []
+    visitados = {}
     fronteira = LifoQueue()
     fronteira.put(nodo_raiz)
     qtd_nos_expandidos = 0
@@ -185,7 +185,7 @@ def dfs(estado):
         return v.getPath()
 
       if v.estado not in visitados:
-        visitados.append(v.estado)
+        visitados[v.estado] = True
         sucessores = expande(v)
         qtd_nos_expandidos += 1
         for sucessor in sucessores:
@@ -214,7 +214,7 @@ def astar_hamming(estado):
     tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
-    visitados = []
+    visitados = {}
     fronteira = PriorityQueue()
     fronteira.put((0,nodo_raiz))
     qtd_nos_expandidos = 0
@@ -229,7 +229,7 @@ def astar_hamming(estado):
         return v.getPath()
 
       if v.estado not in visitados:
-        visitados.append(v.estado)
+        visitados[v.estado] = True
         sucessores = expande(v)
         qtd_nos_expandidos += 1
         for nodo in sucessores:
@@ -271,7 +271,7 @@ def astar_manhattan(estado):
     tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
-    visitados = []
+    visitados = {}
     fronteira = PriorityQueue()
     fronteira.put((0,nodo_raiz))
     qtd_nos_expandidos = 0
@@ -286,7 +286,7 @@ def astar_manhattan(estado):
         return v.getPath()
 
       if v.estado not in visitados:
-        visitados.append(v.estado)
+        visitados[v.estado] = True
         sucessores = expande(v)
         qtd_nos_expandidos += 1
         for nodo in sucessores:
