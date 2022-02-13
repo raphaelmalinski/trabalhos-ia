@@ -1,4 +1,5 @@
 from queue import Queue, LifoQueue, PriorityQueue
+import time
 
 class Nodo:
     """
@@ -131,22 +132,30 @@ def bfs(estado):
     :param estado: str
     :return:
     """
+    tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
     visitados = []
     fronteira = Queue()
     fronteira.put(nodo_raiz)
+    qtd_nos_expandidos = 0
 
     while not fronteira.empty():
       v = fronteira.get()
       if v.isSolved():
+        tempo_final = time.time() # em segundos
+        print(f"BFS: {tempo_final - tempo_inicial} segundos")
+        print(f"Custo: {v.custo}")
+        print(f"Nós expandidos: {qtd_nos_expandidos}")
         return v.getPath()
 
       if v.estado not in visitados:
         visitados.append(v.estado)
         sucessores = expande(v)
+        qtd_nos_expandidos += 1
         for sucessor in sucessores:
           fronteira.put(sucessor)
+
     return None     #return None if it has no solution
 
 def dfs(estado):
@@ -158,23 +167,30 @@ def dfs(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
+    tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
     visitados = []
     fronteira = LifoQueue()
     fronteira.put(nodo_raiz)
+    qtd_nos_expandidos = 0
 
     while not fronteira.empty():
       v = fronteira.get()
       if v.isSolved():
+        tempo_final = time.time() # em segundos
+        print(f"DFS: {tempo_final - tempo_inicial} segundos")
+        print(f"Custo: {v.custo}")
+        print(f"Nós expandidos: {qtd_nos_expandidos}")
         return v.getPath()
 
       if v.estado not in visitados:
         visitados.append(v.estado)
         sucessores = expande(v)
+        qtd_nos_expandidos += 1
         for sucessor in sucessores:
           fronteira.put(sucessor)
+
     return None     #return None if it has no solution
 
 def h_hamming(estado):
@@ -195,20 +211,27 @@ def astar_hamming(estado):
     :param estado: str
     :return:
     """
+    tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
     visitados = []
     fronteira = PriorityQueue()
     fronteira.put((0,nodo_raiz))
+    qtd_nos_expandidos = 0
 
     while not fronteira.empty():
       v = fronteira.get()[1]
       if v.isSolved():
+        tempo_final = time.time() # em segundos
+        print(f"A* Hamming: {tempo_final - tempo_inicial} segundos")
+        print(f"Custo: {v.custo}")
+        print(f"Nós expandidos: {qtd_nos_expandidos}")
         return v.getPath()
 
       if v.estado not in visitados:
         visitados.append(v.estado)
         sucessores = expande(v)
+        qtd_nos_expandidos += 1
         for nodo in sucessores:
           fronteira.put((nodo.custo + h_hamming(nodo.estado), nodo))
 
@@ -245,19 +268,28 @@ def astar_manhattan(estado):
     :param estado: str
     :return:
     """
+    tempo_inicial = time.time() # em segundos
     nodo_raiz = Nodo(estado, None, "", 0)
     if not nodo_raiz.isSolvable(): return None
     visitados = []
     fronteira = PriorityQueue()
     fronteira.put((0,nodo_raiz))
+    qtd_nos_expandidos = 0
 
     while not fronteira.empty():
       v = fronteira.get()[1]
       if v.isSolved():
+        tempo_final = time.time() # em segundos
+        print(f"A* Manhattan: {tempo_final - tempo_inicial} segundos")
+        print(f"Custo: {v.custo}")
+        print(f"Nós expandidos: {qtd_nos_expandidos}")
         return v.getPath()
 
       if v.estado not in visitados:
         visitados.append(v.estado)
         sucessores = expande(v)
+        qtd_nos_expandidos += 1
         for nodo in sucessores:
           fronteira.put((nodo.custo + h_manhattan(nodo.estado), nodo))
+
+    return None     #return None if it has no solution

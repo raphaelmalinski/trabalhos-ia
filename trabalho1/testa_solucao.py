@@ -102,6 +102,8 @@ class TestaSolucao(unittest.TestCase):
         :param estado: str
         :return:
         """
+        self.assertEqual(68539, len(solucao.dfs("2_3541687")))
+
         # nao ha solucao a partir do estado 185423_67
         self.assertEqual(None, solucao.dfs("185423_67"))
     
