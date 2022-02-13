@@ -1,3 +1,5 @@
+from queue import PriorityQueue
+
 class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
@@ -136,10 +138,10 @@ def h_haming(estado):
     """
     Recebe um estado e retorna a distancia de hamming
     """
-	OBJETIVO = "12345678_"
-	h = sum( OBJETIVO[i] != estado[i] for i in range(len(estado)) )\
-	
-	return h
+    OBJETIVO = "12345678_"
+    h = sum( OBJETIVO[i] != estado[i] for i in range(len(estado)) )\
+    
+    return h
 
 def astar_hamming(estado):
     """
@@ -150,8 +152,34 @@ def astar_hamming(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    def pathFromRootNode(actualNode, solutionSteps=[]):
+      if(actualNode.pai == None):
+        return solutionSteps.append((actualNode.acao, actualNode.estado))
+
+      pathFromRootNode(actualNode.pai, solutionSteps)
+      solutionSteps.append((actualNode.acao, actualNode.estado))
+      return solutionSteps
+      
+
+
+    OBJETIVO = "12345678_"
+    nodo_raiz = Nodo(estado, None, "", 0)
+    visitados = []
+    fronteira = PriorityQueue()
+    fronteira.put((0,nodo_raiz))
+
+    while len(fronteira) > 0:
+      v = fronteira.get()
+      if v.estado == OBJETIVO:
+        return pathFromRootNode(v)
+
+      if v.estado not in visitados:
+        visitados.append(v.estado)
+        sucessores = expande(v)
+        for nodo in sucessores:
+        	fronteira.put((nodo.custo + h_hamming(nodo.estado), nodo))
+
+    return None     #return None if it has no solution
 
 
 def astar_manhattan(estado):
