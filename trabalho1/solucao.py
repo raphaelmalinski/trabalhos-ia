@@ -245,5 +245,19 @@ def astar_manhattan(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    nodo_raiz = Nodo(estado, None, "", 0)
+    if not nodo_raiz.isSolvable(): return None
+    visitados = []
+    fronteira = PriorityQueue()
+    fronteira.put((0,nodo_raiz))
+
+    while not fronteira.empty():
+      v = fronteira.get()[1]
+      if v.isSolved():
+        return v.getPath()
+
+      if v.estado not in visitados:
+        visitados.append(v.estado)
+        sucessores = expande(v)
+        for nodo in sucessores:
+          fronteira.put((nodo.custo + h_manhattan(nodo.estado), nodo))
