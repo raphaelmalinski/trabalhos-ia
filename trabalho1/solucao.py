@@ -114,8 +114,8 @@ def bfs(estado):
       if v.estado == OBJETIVO:
         return pathFromRootNode(v)
 
-      if v not in visitados:
-        visitados.append(v)
+      if v.estado not in visitados:
+        visitados.append(v.estado)
         sucessores = expande(v)
         fronteira.extend(sucessores)
     return None     #return None if it has no solution
