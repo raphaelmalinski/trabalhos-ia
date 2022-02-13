@@ -17,6 +17,12 @@ class Nodo:
         self.pai : Nodo = pai
         self.acao : str = acao
         self.custo : int = custo
+    
+    def __lt__(self, other):
+        return (self.custo < other.custo)
+
+    def __gt__(self, other):
+        return (self.custo > other.custo)
 
     def isSolved(self):
       OBJETIVO = "12345678_"
@@ -155,7 +161,7 @@ def dfs(estado):
     # substituir a linha abaixo pelo seu codigo
     raise NotImplementedError
 
-def h_haming(estado):
+def h_hamming(estado):
     """
     Recebe um estado e retorna a distancia de hamming
     """
@@ -174,13 +180,13 @@ def astar_hamming(estado):
     :return:
     """
     nodo_raiz = Nodo(estado, None, "", 0)
-    if nodo_raiz.isSolvable(): return True
+    if not nodo_raiz.isSolvable(): return None
     visitados = []
     fronteira = PriorityQueue()
     fronteira.put((0,nodo_raiz))
 
     while not fronteira.empty():
-      v = fronteira.get()
+      v = fronteira.get()[1]
       if v.isSolved():
         return v.getPath()
 
