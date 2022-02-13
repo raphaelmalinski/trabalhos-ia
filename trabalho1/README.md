@@ -1,26 +1,14 @@
-Integrantes:
-Arthur Bockmann Grossi - 00275607
-João Atz Dick - 00185410
-Raphael Malinski Vieira - 00279794
+# Integrantes:
+- Arthur Bockmann Grossi - 00275607
+- João Atz Dick - 00185410
+- Raphael Malinski Vieira - 00279794
 
-Estatísticas dos algoritmos para o estado inicial "2_3541687"
+## Estatísticas dos algoritmos para o estado inicial "2_3541687"
 
-Algoritmo BFS
-nº nós expandidos: 101425
-tempo decorrido: 169.6374 segundos
-custo total: 23
+|                  | **BFS**            | **DFS**            | **A* Hamming**      | **A* Manhattan**   |
+|:----------------:|:------------------:|:------------------:|:-------------------:|:------------------:|
+| Nós expandidos   | 101425             | 71399              | 14093               | 1837               |
+| Custo            | 23                 | 68539              | 23                  | 23                 |
+| Tempo (segundos) | 1.3713970184326172 | 0.8064398765563965 | 0.32100582122802734 | 0.0551905632019043 |
 
-Algoritmo DFS
-nº nós expandidos: 71399
-tempo decorrido: 83.7158 segundos
-custo total: 68539
 
-Algoritmo A* Hamming
-nº nós expandidos: 14093
-tempo decorrido: 2.727 segundos
-custo total: 23
-
-Algoritmo A* Manhattan
-nº nós expandidos: 1837
-tempo decorrido: 0.1053 segundos
-custo total: 23
