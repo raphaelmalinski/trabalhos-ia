@@ -3,6 +3,7 @@ import sys
 
 import advsearch.othello.board as board
 
+DEPTH = 5
 INFINITY = 999999
 
 class Node:
@@ -71,7 +72,7 @@ def make_move(the_board, color):
 
     noMove = (-1, -1) #We suppose the root node is a no move node
     rootNode = Node(None, the_board.__str__(), noMove, color)
-    bestPlay = minmax_decision_ab(rootNode, 5)
+    bestPlay = minmax_decision_ab(rootNode, DEPTH)
     return bestPlay.move
 
 def minmax_decision_ab(rootNode: Node, depth: int):
