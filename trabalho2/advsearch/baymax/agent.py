@@ -3,6 +3,8 @@ import sys
 
 import advsearch.othello.board as board
 
+INFINITY = 999999
+
 class Node:
   def __init__(self, parent, state, move, color):
     self.parent: Node = parent
@@ -70,12 +72,10 @@ def make_move(the_board, color):
     return bestPlay.move
 
 def minmax_decision_ab(rootNode: Node, depth: int):
-  INFINITY = 65 #max number of pieces for one color is 64(full 8x8 board)
   maxNode = max_node(rootNode, -INFINITY, +INFINITY, depth)
   return maxNode
 
 def max_node(node: Node, alpha: int, beta: int, depth: int):
-  INFINITY = 65
   
   if not node.hasMoves() or node.depth == depth:
     node.calculateScore()
@@ -99,7 +99,6 @@ def max_node(node: Node, alpha: int, beta: int, depth: int):
   return bestNode
 
 def min_node(node: Node, alpha: int, beta: int, depth: int):
-  INFINITY = 65
 
   if not node.hasMoves() or node.depth == depth:
     node.calculateScore()
