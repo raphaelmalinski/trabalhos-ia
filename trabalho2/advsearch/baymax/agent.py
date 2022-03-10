@@ -30,10 +30,9 @@ class Node:
     quinas = [(0,0), (0,7), (7,0), (7,7)]
     self.score = sum([1 for char in str(actualBoard) if char == self.color])
     for quina in quinas:
-        if (quina in legalMoves):
-        	self.score *= 2
+      if (quina in legalMoves):
+        self.score *= 2
    
-    		
   def expand(self):
     sons = []
     actualBoard = board.from_string(self.state)
