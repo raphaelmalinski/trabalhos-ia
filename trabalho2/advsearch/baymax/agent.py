@@ -22,8 +22,13 @@ class Node:
     actualBoard = board.from_string(self.state)
     return actualBoard.has_legal_move(self.color)
   
-  def calculateScore(self):
+  def calculateScore(self, isEnemy):
     actualBoard = board.from_string(self.state)
+    if isEnemy:
+      color = actualBoard.opponent(self.color)
+    else:
+      color = self.color
+
     self.score = sum([1 for char in str(actualBoard) if char == self.color])
   
   def expand(self):
@@ -72,7 +77,7 @@ def max_node(node: Node, alpha: int, beta: int, depth: int):
   INFINITY = 65
   
   if not node.hasMoves() or node.depth == depth:
-    node.calculateScore()
+    node.calculateScore(False)
     return node
 
   sucessors = node.expand()
@@ -96,7 +101,7 @@ def min_node(node: Node, alpha: int, beta: int, depth: int):
   INFINITY = 65
 
   if not node.hasMoves() or node.depth == depth:
-    node.calculateScore()
+    node.calculateScore(True)
     return node
 
   sucessors = node.expand()
