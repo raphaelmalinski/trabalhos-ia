@@ -1,6 +1,18 @@
 import numpy as np
 
 
+def retorna_colunas_matriz(m):
+    qtd_dados = np.shape(m)[0]
+
+    dados_x = list(map(lambda x: x[0], m[0:qtd_dados]))
+    dados_y = list(map(lambda y: y[1], m[0:qtd_dados]))
+
+    return dados_x, dados_y
+
+def calcula_hipotese(theta_0, theta_1, dados_x):
+    return list(map(lambda x: theta_0 + theta_1 * x, dados_x))
+
+
 def compute_mse(theta_0, theta_1, data):
     """
     Calcula o erro quadratico medio
@@ -9,7 +21,10 @@ def compute_mse(theta_0, theta_1, data):
     :param data: np.array - matriz com o conjunto de dados, x na coluna 0 e y na coluna 1
     :return: float - o erro quadratico medio
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    dados_x, dados_y = retorna_colunas_matriz(data)
+    dados_x_hipotese = calcula_hipotese(theta_0, theta_1, dados_x)
+
+    return np.square(np.subtract(dados_x_hipotese, dados_y)).mean()
 
 
 def step_gradient(theta_0, theta_1, data, alpha):
