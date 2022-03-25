@@ -7,8 +7,17 @@ def evaluate(individual):
     :param individual:list
     :return:int numero de ataques entre rainhas no individuo recebido
     """
-    raise NotImplementedError  # substituir pelo seu codigo
-
+    attacks = 0
+    for col, row in enumerate(individual):
+      for sum, itCol in enumerate(range(col+1, len(individual))):
+        if row == individual[itCol]:  ##checks same row attacks
+          attacks += 1
+      for sum, itCol in enumerate(range(col+1, len(individual))):
+        if individual[itCol] == row - (sum + 1):  #checks lower diagonal attacks
+          attacks +=1
+        if individual[itCol] == row + (sum + 1):  #checks upper diagonal attacks
+          attacks +=1
+    return attacks
 
 def tournament(participants):
     """
