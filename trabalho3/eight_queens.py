@@ -26,8 +26,13 @@ def tournament(participants):
     :param participants:list - lista de individuos
     :return:list melhor individuo da lista recebida
     """
-    raise NotImplementedError  # substituir pelo seu codigo
-
+    best = (99, None) #(conflicts, participant)
+    for participant in participants:
+      participantConflicts = evaluate(participant)
+      if participantConflicts < best[0]:
+        best = (participantConflicts, participant)
+    
+    return best[1]
 
 def crossover(parent1, parent2, index):
     """
