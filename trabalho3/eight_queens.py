@@ -48,7 +48,9 @@ def crossover(parent1, parent2, index):
     :param index:int
     :return:list,list
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    children1 = parent1[0:index] + parent2[index:]
+    children2 = parent2[0:index] + parent1[index:]
+    return children1, children2
 
 
 def mutate(individual, m):
