@@ -9,17 +9,13 @@ def evaluate(individual):
     :param individual:list
     :return:int numero de ataques entre rainhas no individuo recebido
     """
-    attacks = 0
+    collisions = 0
     for col, row in enumerate(individual):
-      for sum, itCol in enumerate(range(col+1, len(individual))):
-        if row == individual[itCol]:  ##checks same row attacks
-          attacks += 1
-      for sum, itCol in enumerate(range(col+1, len(individual))):
-        if individual[itCol] == row - (sum + 1):  #checks lower diagonal attacks
-          attacks +=1
-        if individual[itCol] == row + (sum + 1):  #checks upper diagonal attacks
-          attacks +=1
-    return attacks
+      for itCol in range(col+1, len(individual)): #We only check for collisions upwards, so we prevent from counting the same collision 2 times
+        itRow = individual[itCol]
+        if row == itRow or abs(col-itCol) == abs(row-itRow):
+          collisions += 1
+    return collisions
 
 def tournament(participants):
     """
