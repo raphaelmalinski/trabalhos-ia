@@ -1,5 +1,33 @@
 import random
 
+# Auxiliary functions =====
+def generateRandomIndividuals(n):
+    """
+    Gera invididuas randomicos
+    :param n:list - numero de individuos gerados
+    :return:list - individuas gerados
+    """
+    individuals = []
+    for nI in range(n):
+      individuals.append([random.randint(1,8), random.randint(1,8), random.randint(1,8), random.randint(1,8), random.randint(1,8), random.randint(1,8), random.randint(1,8), random.randint(1,8)])
+    return individuals
+
+def tournament2(p, k):
+    """
+    Executa uma seleção na população p entre k participantes
+    :param p:list - população
+    :param k:int - numero de participantes
+    :return:list - 2 vencedores
+    """
+    winners=[]
+    for i in range(2):
+      competitors =[]
+      for c in range(k):
+        competitors.append(random.choice(p))
+      winners.append(tournament(competitors))
+    return winners
+
+# =========================
 def evaluate(individual):
     """
     Recebe um indivíduo (lista de inteiros) e retorna o número de ataques
