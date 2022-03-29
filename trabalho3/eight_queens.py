@@ -118,5 +118,5 @@ def run_ga(g, n, k, m, e):
         winnersM.append(mutate(winnersC[0], m))
         winnersM.append(mutate(winnersC[1], m))
         g_p.append(winnersM)
-      p = g_p
+      p.append(g_p)
     return tournament(p)
