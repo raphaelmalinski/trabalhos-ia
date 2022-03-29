@@ -106,4 +106,17 @@ def run_ga(g, n, k, m, e):
     :param e:bool - se vai haver elitismo
     :return:list - melhor individuo encontrado
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    p = generateRandomIndividuals(n)
+    for generation in range(g):
+      g_p = []
+      if e:
+        g_p.append(tournament(p))
+      while len(p) < n:
+        winners = tournament2(p, k)
+        winnersC = crossover(winners[0], winners[1], random.randint(0,7))
+        winnersM = []
+        winnersM.append(mutate(winnersC[0], m))
+        winnersM.append(mutate(winnersC[1], m))
+        g_p.append(winnersM)
+      p = g_p
+    return tournament(p)
