@@ -111,12 +111,12 @@ def run_ga(g, n, k, m, e):
       g_p = []
       if e:
         g_p.append(tournament(p))
-      while len(p) < n:
+      while len(g_p) < n:
         winners = tournament2(p, k)
         winnersC = crossover(winners[0], winners[1], random.randint(0,7))
         winnersM = []
         winnersM.append(mutate(winnersC[0], m))
         winnersM.append(mutate(winnersC[1], m))
-        g_p.append(winnersM)
-      p.append(g_p)
+        g_p.extend(winnersM)
+      p = g_p
     return tournament(p)
