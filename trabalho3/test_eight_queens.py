@@ -10,6 +10,12 @@ class TestEightQueens(unittest.TestCase):
         :return:
         """
         self.assertEqual(10, eight_queens.evaluate([2,2,4,8,1,6,3,4]))
+        self.assertEqual(8, eight_queens.evaluate([2,7,4,8,1,6,3,4]))
+        self.assertEqual(0, eight_queens.evaluate([6,3,7,2,8,5,1,4]))
+        self.assertEqual(4, eight_queens.evaluate([7,3,7,6,8,3,1,4]))
+        self.assertEqual(1, eight_queens.evaluate([5,1,6,4,7,1,8,2]))
+        self.assertEqual(0, eight_queens.evaluate([5,8,4,1,7,2,6,3]))
+        self.assertEqual(0, eight_queens.evaluate([4,8,5,3,1,7,2,6]))
 
     def test_tournament(self):
         """
