@@ -76,6 +76,7 @@ class TestEightQueens(unittest.TestCase):
             args=(100, 40, 2, 0.3, True),
             time_limit=60, default='timeout'
         )
+        print(f"Melhor indivíduo encontrado: {response} -> conflitos: {eight_queens.evaluate(response)}")
         if response == 'timeout':
             self.fail("run_ga ran out of time")
 
