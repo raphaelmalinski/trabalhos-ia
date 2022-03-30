@@ -95,7 +95,6 @@ def mutate(individual, m):
     return individual
 
 
-
 def run_ga(g, n, k, m, e):
     """
     Executa o algoritmo genético e retorna o indivíduo com o menor número de ataques entre rainhas
@@ -120,3 +119,33 @@ def run_ga(g, n, k, m, e):
         g_p.extend(winnersM)
       p = g_p
     return tournament(p)
+
+    
+def run_ga_plot(g, n, k, m, e):
+    """
+  
+    Executa o algoritmo genético e retorna o indivíduo com o menor número de ataques entre rainhas e
+    TODAS AS GERACOES para crair o plot
+    :param g:int - numero de gerações
+    :param n:int - numero de individuos
+    :param k:int - numero de participantes do torneio
+    :param m:float - probabilidade de mutação (entre 0 e 1, inclusive)
+    :param e:bool - se vai haver elitismo
+    :return:list - melhor individuo encontrado
+    """
+    p = generateRandomIndividuals(n)
+    allGens = []
+    for generation in range(g):
+      g_p = []
+      if e:
+        g_p.append(tournament(p))
+      while len(g_p) < n:
+        winners = tournament2(p, k)
+        winnersC = crossover(winners[0], winners[1], random.randint(0,7))
+        winnersM = []
+        winnersM.append(mutate(winnersC[0], m))
+        winnersM.append(mutate(winnersC[1], m))
+        g_p.extend(winnersM)
+      p = g_p
+      allGens.append(p)
+    return tournament(p), allGens
