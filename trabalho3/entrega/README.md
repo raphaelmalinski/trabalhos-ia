@@ -7,7 +7,7 @@
 
 - Algoritmo Exercutado com sucesso com (g, n, k, m, e) == (60, 30, 4, 0.3, True)
 
-Plorred Curves
+Plotted Curves
 
 <img src="./ga.png">
 
