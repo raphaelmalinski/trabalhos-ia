@@ -56,7 +56,8 @@ class QLearningAgent(ReinforcementAgent):
         if state == 'TERMINAL_STATE':
           return 0.0
 
-        return self.qValues[str(state[0])+str(state[1])+action]   
+        return self.qValues[str(state[0])+str(state[1])+action]
+        
 
 
     def computeValueFromQValues(self, state):
